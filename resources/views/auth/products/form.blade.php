@@ -26,7 +26,7 @@
                 @endisset
                 @csrf
                 <div class="input-group row">
-                    <label for="alias" class="col-sm-2 col-form-label">Код: </label>
+                    <label for="alias" class="col-sm-2 col-form-label">Алиас: </label>
                     <div class="col-sm-6">
                         @include('auth.layouts.error', ['fieldName' => 'alias'])
                         <input type="text" class="form-control" name="alias" id="alias"
@@ -92,25 +92,6 @@
                     <label for="image" class="col-sm-2 col-form-label">Картинка: </label>
                     <div class="col-sm-10">
                          <input type="file" name="image" id="image" class="btn btn-default btn-file">
-                    </div>
-                </div>
-                <br>
-
-                <div class="input-group row">
-                    <label for="category_id" class="col-sm-2 col-form-label">Свойства товара: </label>
-                    <div class="col-sm-6">
-                        @include('auth.layouts.error', ['fieldName' => 'property_id[]'])
-                        <select name="property_id[]" multiple>
-                            @foreach($properties as $property)
-                                <option value="{{ $property->id }}"
-                                    @isset($product)
-                                        @if($product->properties->contains($property->id))
-                                        selected
-                                    @endif
-                                    @endisset
-                                >{{ $property->name }}</option>
-                            @endforeach
-                        </select>
                     </div>
                 </div>
                 <br>
