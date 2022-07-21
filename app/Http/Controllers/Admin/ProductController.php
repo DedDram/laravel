@@ -70,7 +70,8 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::get();
-        return view('auth.products.form', compact('product', 'categories'));
+        $properties = Property::get();
+        return view('auth.products.form', compact('product', 'categories', 'properties'));
     }
 
     /**
