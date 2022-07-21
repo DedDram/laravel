@@ -38,7 +38,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $path = $request->file('image')->store('app/categories');
+        $path = $request->file('image')->store('public/categories');
         $params = $request->all();
         $params['image'] = $path;
         Category::create($params);
@@ -77,7 +77,7 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         Storage::delete($category->image);
-        $path = $request->file('image')->store('app/categories');
+        $path = $request->file('image')->store('public/categories');
         $params = $request->all();
         $params['image'] = $path;
         $category->update($params);
