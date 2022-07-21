@@ -25,6 +25,7 @@ class MainController extends Controller
         }
     }
     public function product($category, $product = null){
+        dd($product);
         return view('product', compact('category','product'));
     }
 }

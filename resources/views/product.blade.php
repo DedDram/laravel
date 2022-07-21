@@ -4,7 +4,7 @@
     <h1>{{$category->name}}</h1>
     <h2>{{$category}}</h2>
     <p>Цена: <b>{{$category->price}} ₽</b></p>
-    <img src="/">
+    <img src="{{ Storage::url($product->image) }}">
     <p>{{$category->name}}</p>
     <form action="{{route('basket-add', $product)}}" method="post">
         <button type="submit" class="btn btn-success" role="button">добавить в корзину</button>
