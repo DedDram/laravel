@@ -16,16 +16,16 @@ class MainController extends Controller
         $categories = Category::get();
         return view('categories', compact('categories'));
     }
-    public function category($code){
-        $category = Category::where('alias', $code)->first();
+    public function category($alias){
+        $category = Category::where('alias', $alias)->first();
         if(!empty($category)){
             return view('category', compact('category'));
         }else{
             return abort(404);
         }
     }
-    public function product($category, $product = null){
-        dd($product);
+    public function product($category, $alias = null){
+        $product = Product::where('alias', $alias)->first();
         return view('product', compact('category','product'));
     }
 }
