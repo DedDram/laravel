@@ -52,7 +52,6 @@ Route::group([
 ],function(){
     Route::post('/add/{id}', [BasketController::class, 'basketAdd' ])->name('basket-add');
     Route::group([
-        'prefix' => 'basket',
         'middleware' => 'basket_not_empty',
     ],function(){
         Route::get('/', [BasketController::class, 'basket' ])->name('basket');
