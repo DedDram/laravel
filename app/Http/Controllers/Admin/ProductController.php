@@ -15,7 +15,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function index()
     {
@@ -26,7 +26,7 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function create()
     {
@@ -39,17 +39,13 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProductRequest $request)
     {
+        $path = $request->file('image')->store('public/products');
         $params = $request->all();
-
-        unset($params['image']);
-        if ($request->has('image')) {
-            $params['image'] = $request->file('image')->store('products');
-        }
-
+        $params['image'] = $path;
         Product::create($params);
         return redirect()->route('products.index');
     }
@@ -58,7 +54,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Product $product)
     {
@@ -69,7 +65,7 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Product $product)
     {
@@ -83,25 +79,14 @@ class ProductController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProductRequest $request, Product $product)
     {
+        Storage::delete($product->image);
+        $path = $request->file('image')->store('public/products');
         $params = $request->all();
-        unset($params['image']);
-        if ($request->has('image')) {
-            Storage::delete($product->image);
-            $params['image'] = $request->file('image')->store('products');
-        }
-
-        foreach (['new', 'hit', 'recommend'] as $fieldName) {
-            if (!isset($params[$fieldName])) {
-                $params[$fieldName] = 0;
-            }
-        }
-
-        $product->properties()->sync($request->property_id);
-
+        $params['image'] = $path;
         $product->update($params);
         return redirect()->route('products.index');
     }
@@ -110,10 +95,11 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Product $product)
     {
+        Storage::delete($product->image);
         $product->delete();
         return redirect()->route('products.index');
     }
