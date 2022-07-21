@@ -38,7 +38,6 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $path = $request->file('image')->store('categories');
-        dd($path);
         $params = $request->all();
         $params['image'] = $path;
         Category::create($params);
