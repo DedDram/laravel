@@ -1,5 +1,5 @@
 @extends('layouts.master')
-@section('title', 'Товар')
+@section('title', $product->name)
 @section('content')
     <h1>{{$product->name}}</h1>
     <h2>{{$category}}</h2>
