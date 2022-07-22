@@ -55,7 +55,6 @@ class BasketController extends Controller
         }else{
             $order = Order::find($orderId);
         }
-
         if($order->products->contains($productId)){
             $pivotRow = $order->products()->where('product_id', $productId)->first()->pivot;
             $pivotRow->count++;
