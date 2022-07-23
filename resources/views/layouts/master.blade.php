@@ -22,9 +22,9 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li @if(Route::currentRouteNamed('index')) class="active" @endif><a href="{{route('index')}}">Все товары</a></li>
-                <li @if(Route::currentRouteNamed('categories')) class="active" @endif><a href="{{route('categories')}}">Категории</a></li>
-                <li @if(Route::currentRouteNamed('basket')) class="active" @endif><a href="{{route('basket')}}">В корзину</a></li>
+                <li @routeActive('index')><a href="{{route('index')}}">Все товары</a></li>
+                <li @routeActive('categor*')><a href="{{route('categories')}}">Категории</a></li>
+                <li @routeActive('basket*')><a href="{{route('basket')}}">В корзину</a></li>
                 <li><a href="/reset">Сбросить проект в начальное состояние</a></li>
                 <li><a href="/locale/en">en</a></li>
 
