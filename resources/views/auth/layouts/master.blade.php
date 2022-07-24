@@ -52,13 +52,19 @@
                 @auth
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                               data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false" v-pre>
-                                Администратор {{ Auth::user()->name }}
-
-                            </a>
-
+                    @if(Auth::user()->isAdmin())
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Администратор {{ Auth::user()->name }}
+                                </a>
+                    @else
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{route('orders.index')}}" role="button"
+                                   data-toggle="dropdown"
+                                   aria-haspopup="true" aria-expanded="false" v-pre>
+                                    {{ Auth::user()->name }}
+                                </a>
+                    @endif
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout')}}"
                                    onclick="event.preventDefault();

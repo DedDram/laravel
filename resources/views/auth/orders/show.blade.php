@@ -20,7 +20,21 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach ($skus as $sku)
+                        @foreach ($order->products as $product)
+                            <tr>
+                                <td>
+                                    <a href="{{ route('product', [$product->category->alias, $product->alias]) }}">
+                                        <img height="56px"
+                                             src="{{ Storage::url($product->image) }}">
+                                        {{ $product->name }}
+                                    </a>
+                                </td>
+                                <td><span class="badge"> {{ $product->count }}</span></td>
+                                <td>{{ $product->price }} руб.</td>
+                                <td>{{ $product->getPriceForCount() }}</td>
+                            </tr>
+                        @endforeach
+{{--                        @foreach ($skus as $sku)
                             <tr>
                                 <td>
                                     <a href="{{ route('sku', [$sku->product->category->code, $sku->product->code, $sku]) }}">
@@ -36,14 +50,9 @@
                         @endforeach
                         <tr>
                             <td colspan="3">Общая стоимость:</td>
-                            <td>{{ $order->sum }} {{ $order->currency->symbol }}</td>
+                           <td>{{ $order->sum }} {{ $order->currency->symbol }}</td>
                         </tr>
-                        @if($order->hasCoupon())
-                            <tr>
-                                <td colspan="3">Был использован купон:</td>
-                                <td><a href="{{ route('coupons.show', $order->coupon) }}">{{ $order->coupon->code }}</a></td>
-                            </tr>
-                        @endif
+--}}
                         </tbody>
                     </table>
                     <br>
