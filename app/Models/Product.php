@@ -27,4 +27,18 @@ class Product extends Model
             return $this->price;
         }
     }
+    public function isHit()
+    {
+        return $this->hit === 1;
+    }
+
+    public function isNew()
+    {
+        return $this->new === 1;
+    }
+
+    public function isRecommend()
+    {
+        return $this->recommend === 1;
+    }
 }
