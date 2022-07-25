@@ -9,7 +9,8 @@ use App\Http\Controllers\BasketController;
 use App\Http\Controllers\MainController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Person\OrderController as PersonOrderController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -35,19 +36,18 @@ Route::get('/logout', [LoginController::class, 'logout'])->name('get-logout');
 Route::middleware(['auth'])->group(function () {
     Route::group([
         'prefix' => 'person',
-        'namespace' => 'Person',
+        'as' => 'person.',
     ], function () {
-        Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
-        Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+        Route::get('/orders', [PersonOrderController::class, 'index'])->name('orders.index');
+        Route::get('/orders/{order}', [PersonOrderController::class, 'show'])->name('orders.show');
     });
 
     Route::group([
         'prefix' => 'admin',
-        'namespace' => 'Admin',
     ], function () {
         Route::group(['middleware' => 'is_admin'], function () {
-            Route::get('/orders', [OrderController::class, 'index'])->name('home');
-            Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+            Route::get('/orders', [AdminOrderController::class, 'index'])->name('home');
+            Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
         });
         Route::resource('categories', CategoryController::class);
         Route::resource('products', ProductController::class);

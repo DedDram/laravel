@@ -29,13 +29,16 @@
 
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
+                    @admin
                     <li><a href="{{route('categories.index')}}">Категории</a></li>
-                    <li><a href="{{route('products.index')}}">Товары</a>
-                    <li><a href="">Свойства</a>
-                    <li><a href="">Купоны</a>
-                    <li><a href="">Поставщики</a>
-                    </li>
+                    <li><a href="{{route('products.index')}}">Товары</a></li>
+                    <li><a href="">Свойства</a></li>
+                    <li><a href="">Купоны</a></li>
+                    <li><a href="">Поставщики</a></li>
                     <li><a href="{{ route('home') }}">Заказы</a></li>
+                    @else
+                        <li><a href="{{ route('home') }}">Заказы</a></li>
+                        @endadmin
                 </ul>
 
                 @guest
@@ -52,19 +55,13 @@
                 @auth
                     <ul class="nav navbar-nav navbar-right">
                         <li class="nav-item dropdown">
-                    @if(Auth::user()->isAdmin())
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                   data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Администратор {{ Auth::user()->name }}
-                                </a>
-                    @else
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="{{route('orders.index')}}" role="button"
-                                   data-toggle="dropdown"
-                                   aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-                    @endif
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown"
+                               aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }}
+
+                            </a>
+
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{{ route('logout')}}"
                                    onclick="event.preventDefault();

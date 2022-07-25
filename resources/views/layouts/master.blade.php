@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -29,7 +28,8 @@
                 <li><a href="/locale/en">en</a></li>
 
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">₽<span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">₽<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/currency/RUB">₽</a></li>
                         <li><a href="/currency/USD">$</a></li>
@@ -40,12 +40,16 @@
 
             <ul class="nav navbar-nav navbar-right">
                 @guest
-                <li><a href="{{route('login')}}">Войти</a></li>
-                <li><a href="{{route('register')}}">Регистрация</a></li>
+                    <li><a href="{{route('login')}}">Войти</a></li>
+                    <li><a href="{{route('register')}}">Регистрация</a></li>
                 @endguest
                 @auth
-                <li><a href="{{route('home')}}">Админка</a></li>
-                <li><a href="{{route('get-logout')}}">Выйти</a></li>
+                    @admin
+                            <li><a href="{{route('home')}}">Админка</a></li>
+                    @else
+                            <li><a href="{{route('person.orders.index')}}">Мои заказы</a></li>
+                    @endadmin
+                        <li><a href="{{route('get-logout')}}">Выйти</a></li>
                 @endauth
             </ul>
         </div>
@@ -55,11 +59,11 @@
 <div class="container">
     <div class="starter-template">
         @if(session()->has('success'))
-        <p class="alert alert-success">{{session()->get('success')}}</p>
+            <p class="alert alert-success">{{session()->get('success')}}</p>
         @elseif(session()->has('warning'))
             <p class="alert alert-warning">{{session()->get('warning')}}</p>
         @endif
-    @yield('content')
+        @yield('content')
     </div>
 </div>
 </body>
