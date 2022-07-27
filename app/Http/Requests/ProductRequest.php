@@ -33,7 +33,16 @@ class ProductRequest extends FormRequest
         if ($this->route()->named('products.update')) {
             $rules['alias'] .= ',' . $this->route()->parameter('product')->id;
         }
-
         return $rules;
+    }
+
+    public function messages()
+    {
+        return [
+            'required' => 'Поле :attribute обязательно для ввода',
+            'min' => 'Поле :attribute должно иметь минимум :min символов',
+            'alias.min' => 'Поле alias должно содержать не менее :min символов',
+            'alias.unique' => 'Поле alias должно быть уникально, данное значение уже есть в базе',
+        ];
     }
 }

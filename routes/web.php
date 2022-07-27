@@ -48,10 +48,10 @@ Route::middleware(['auth'])->group(function () {
         Route::group(['middleware' => 'is_admin'], function () {
             Route::get('/orders', [AdminOrderController::class, 'index'])->name('home');
             Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+            Route::resource('categories', CategoryController::class);
+            Route::resource('products', ProductController::class);
+            Route::resource('products/{product}/skus', SkuController::class);
         });
-        Route::resource('categories', CategoryController::class);
-        Route::resource('products', ProductController::class);
-        Route::resource('products/{product}/skus', SkuController::class);
     });
 });
 

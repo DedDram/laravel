@@ -38,14 +38,22 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(ProductRequest $request)
     {
-        $path = $request->file('image')->store('public/products');
         $params = $request->all();
-        $params['image'] = $path;
+        unset($params['image']);
+        if ($request->has('image')) {
+            $path = $request->file('image')->store('public/products');
+            $params['image'] = $path;
+        }
+        foreach (['hit', 'new', 'recommend'] as $fieldName) {
+            if (isset($params[$fieldName])) {
+                $params[$fieldName] = 1;
+            }
+        }
         Product::create($params);
         return redirect()->route('products.index');
     }
@@ -53,7 +61,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param \App\Product $product
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function show(Product $product)
@@ -64,7 +72,7 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Product  $product
+     * @param \App\Product $product
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(Product $product)
@@ -77,16 +85,24 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Product $product
      * @return \Illuminate\Http\RedirectResponse
      */
     public function update(ProductRequest $request, Product $product)
     {
-        Storage::delete($product->image);
-        $path = $request->file('image')->store('public/products');
         $params = $request->all();
-        $params['image'] = $path;
+
+        unset($params['image']);
+        if ($request->has('image')) {
+            Storage::delete($product->image);
+            $params['image']= $request->file('image')->store('public/products');
+        }
+        foreach (['hit', 'new', 'recommend'] as $fieldName) {
+            if (isset($params[$fieldName])) {
+                $params[$fieldName] = 1;
+            }
+        }
         $product->update($params);
         return redirect()->route('products.index');
     }
@@ -94,7 +110,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Product  $product
+     * @param \App\Product $product
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy(Product $product)
