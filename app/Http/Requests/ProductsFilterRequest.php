@@ -28,4 +28,11 @@ class ProductsFilterRequest extends FormRequest
             'price_to' => 'nullable|numeric|min:0',
         ];
     }
+    public function messages()
+    {
+        return [
+            'price_from' => 'Значение должно быть числом больше 0',
+            'price_to' => 'Значение должно быть числом больше 0',
+        ];
+    }
 }
