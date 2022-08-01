@@ -18,9 +18,10 @@ class BasketIsNotEmpty
     public function handle(Request $request, Closure $next)
     {
         $orderId = session('orderId');
-        if (!is_null($orderId)) {
+        if (!is_null($orderId) && Order::getFullSum() > 0) {
             $order = Order::findOrFail($orderId);
             if($order->products->count() == 0){
+                Order::eraseOrderSum();
                 session()->flash('warning', 'Ваша корзина пуста');
                 return redirect()->route('index');
             }
