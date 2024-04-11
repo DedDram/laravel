@@ -41,7 +41,6 @@ services:
             - ./:/var/www:cached
         networks:
             - app-network
-        command: bash -c "php artisan migrate --force && php-fpm"
 
     mysql:
         image: mysql:5.7

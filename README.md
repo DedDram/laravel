@@ -13,6 +13,7 @@ For development convenience, Docker is used
  - docker exec -it project-app-test bash
  - composer install
  - php artisan key:generate
+ - php artisan migrate
 
 Running the console command:
  - docker exec -it project-app-test bash
