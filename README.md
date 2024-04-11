@@ -16,8 +16,6 @@ For development convenience, Docker is used
  - php artisan migrate
 
 Running the console command:
- - docker exec -it project-app-test bash
-	
  Option 1
  - php artisan app:get-json-car-data https://rus-trip.ru/cars.json
 	
@@ -25,5 +23,4 @@ Running the console command:
  - php artisan app:get-json-car-data https://rus-trip.ru/cars2.json
 
 Running tests:
- - docker exec -it project-app-test bash
  - php artisan test
