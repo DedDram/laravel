@@ -4,12 +4,15 @@ DEV Environment:
  - php 8.3
  - mysql
  - redis
- - 
- composer
+ - composer
+
 LOCAL:
 For development convenience, Docker is used
+ - rename .env.example to .env
  - docker-compose up -d --build
+ - docker exec -it project-app-test bash
  - composer install
+ - php artisan key:generate
 
 Running the console command:
  - docker exec -it project-app-test bash
