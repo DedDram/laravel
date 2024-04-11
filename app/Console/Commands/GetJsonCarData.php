@@ -55,8 +55,6 @@ class GetJsonCarData extends Command
                     $this->error('Error while storing car data in the database: ' . $e->getMessage());
                 }
             }
-
-            $this->info('Car data successfully retrieved and stored in the database.');
         } else {
             $this->error('Failed to retrieve car data.');
         }
