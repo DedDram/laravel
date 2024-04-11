@@ -41,12 +41,16 @@ class GetJsonCarData extends Command
                     try {
                         $redisKey = 'vin:' . $car->vin;
                         $existingCar = Redis::hgetall($redisKey);
-                        Redis::hmset($redisKey, $carData);
-                        if (!empty($existingCar)) {
-                            $this->info('Car data successfully updated in Redis.');
+
+                        if ($existingCar != $carData) {
+                            Redis::hmset($redisKey, $carData);
+                            if (!empty($existingCar)) {
+                                $this->info('Car data successfully updated in Redis.');
+                            } else {
+                                $this->info('Car data successfully stored in Redis.');
+                            }
                         } else {
-                            // Если машина отсутствует в Redis, добавляем данные
-                            $this->info('Car data successfully stored in Redis.');
+                            $this->info('Car data in Redis is already up to date.');
                         }
                     } catch (\Exception $e) {
                         $this->error('Error while storing car data in Redis: ' . $e->getMessage());
